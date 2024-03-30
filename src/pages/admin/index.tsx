@@ -1,6 +1,11 @@
-import React, { useState } from "react";
+import Link from "next/link";
+import React, { ReactNode, useState } from "react";
 
-export default function AdminPage() {
+interface PageProps {
+  content: ReactNode;
+}
+
+export default function AdminPage({ content }: PageProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
@@ -35,23 +40,23 @@ export default function AdminPage() {
           관리자 대시보드
         </h2>
         <nav>
-          <a
-            href="#"
+          <Link
+            href="/admin/member"
             className="block py-2.5 px-4 text-gray-300 hover:bg-gray-700"
           >
             회원 관리
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            href="/admin/assignment"
             className="block py-2.5 px-4 text-gray-300 hover:bg-gray-700"
           >
             과제 관리
-          </a>
+          </Link>
         </nav>
       </div>
       <main className="flex-1 p-7">
         <div className="bg-white p-6 rounded shadow">
-          <h1 className="text-2xl font-semibold">대시보드 홈</h1>
+          <h1 className="text-2xl font-semibold">{content}</h1>
         </div>
       </main>
     </div>
