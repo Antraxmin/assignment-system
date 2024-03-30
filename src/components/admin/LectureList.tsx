@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import router from "next/router";
 
 interface Lecture {
+  _id: string;
   week: string;
   lessons: Lesson[];
 }
@@ -40,6 +42,10 @@ export default function LectureList() {
     );
   };
 
+  const handleLessonClick = (lectureId: string, lessonIndex: number) => {
+    router.push(`/lectures/${lectureId}/${lessonIndex}`);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -61,8 +67,14 @@ export default function LectureList() {
           {openCategory === index && (
             <div className="mt-2 border border-gray-300 rounded-md">
               {lecture.lessons.map((lesson, lessonIndex) => (
-                <div key={lessonIndex} className="p-4 border-b border-gray-300">
-                  <h3 className="text-lg font-semibold">{lesson.title}</h3>
+                <div
+                  key={lessonIndex}
+                  onClick={() => handleLessonClick(lecture._id, lessonIndex)}
+                  className="p-4 border-b border-gray-300 hover:bg-gray-100 cursor-pointer"
+                >
+                  <h3 className="text-lg font-semibold cursor-pointer">
+                    {lesson.title}
+                  </h3>
                   <p className="text-sm text-gray-600">{lesson.description}</p>
                 </div>
               ))}
