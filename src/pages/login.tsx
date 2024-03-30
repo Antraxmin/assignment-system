@@ -2,11 +2,13 @@ import LoginModal from "@/components/auth/LoginModal";
 import { loginAdmin } from "@/service/authService";
 import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { useRouter } from "next/router";
 
 const Login = () => {
   const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
 
   const {
     mutate: loginAdminMutate,
@@ -15,6 +17,7 @@ const Login = () => {
   } = useMutation(loginAdmin, {
     onSuccess: (data) => {
       console.log("관리자 로그인 성공", data);
+      router.push("/admin");
     },
     onError: (error) => {
       console.error("관리자 로그인 실패", error);
